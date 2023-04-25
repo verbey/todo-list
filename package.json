@@ -1,0 +1,18 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "TODO application made as part of the Odin Project course",
+  "main": "dist/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@codeberg.org:Verbiturum/todo-list.git"
+  },
+  "author": "Verbiturum",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack-cli": "^5.0.2"
+  }
+}
