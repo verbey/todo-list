@@ -1,0 +1,1 @@
+const noscript = document.querySelector(".noscript").remove();
