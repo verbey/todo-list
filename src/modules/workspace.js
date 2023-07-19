@@ -1,11 +1,11 @@
 "use strict";
 
 class Workspace {
-	constructor(title, description, todos, color) {
+	constructor(title, description, color, todos) {
 		this.title = title;
 		this.description = description;
-		this.todos = todos;
 		this.color = color;
+		this.todos = todos;
 	}
 }
 
