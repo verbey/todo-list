@@ -10,10 +10,37 @@ const Dom = (function () {
 
 	const openWorkspace = (workspace) => {
 		workspace.todos.forEach((todo) => {
-			const todoElement = document.createElement("div");
-			todoElement.classList.add("todo");
-			todoElement.textContent = todo.title;
-			todos.appendChild(todoElement);
+			const todoCont = document.createElement("div");
+			todoCont.classList.add("todoCont");
+			todoCont.style.background = todo.color;
+
+			const todoTitle = document.createElement("h2");
+			todoTitle.textContent = todo.title;
+			todoCont.appendChild(todoTitle);
+
+			const todoDesc = document.createElement("p");
+			todoDesc.textContent = todo.description;
+			todoCont.appendChild(todoDesc);
+
+			const todoDue = document.createElement("div");
+			todoDue.textContent = `Due date: ${todo.dueDate}`;
+			todoCont.appendChild(todoDue);
+
+			const todoPriority = document.createElement("div");
+			todoPriority.textContent = `Priority: ${todo.priority}`;
+			todoCont.appendChild(todoPriority);
+
+			if (todo.checklistItems) {
+				const todoChecklistCont = document.createElement("div");
+				todo.checklistItems.forEach((item) => {
+					const todoChecklistItem = document.createElement("div");
+					todoChecklistItem.textContent = item.title;
+					todoChecklistCont.appendChild(todoChecklistItem);
+				});
+				todoCont.appendChild(todoChecklistCont);
+			}
+
+			todos.appendChild(todoCont);
 		});
 	};
 
