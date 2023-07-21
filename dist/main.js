@@ -96,7 +96,18 @@ const Dom = (function () {
 			workspaces.appendChild(workspaceElement);
 		});
 	};
-	return { openWorkspace, displayWorkspaces };
+
+	const displayToolbar = () => {
+		const createWorkspace = document.createElement("button");
+		createWorkspace.textContent = "Create workspace";
+		createWorkspace.classList.add("createWorkspace");
+		createWorkspace.addEventListener("click", () => {
+			console.log("Create workspace button clicked!");
+		});
+		toolbar.appendChild(createWorkspace);
+	};
+
+	return { openWorkspace, displayWorkspaces, displayToolbar };
 })();
 
 /* harmony default export */ const dom = (Dom);
@@ -115,6 +126,8 @@ const generalWorkspace = new workspace("General", "A workspace for general todos
 const exampleTodo = new todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
 generalWorkspace.todos.push(exampleTodo);
 storage.workspaces.push(generalWorkspace);
+
+dom.displayToolbar();
 dom.displayWorkspaces();
 dom.openWorkspace(generalWorkspace);
 /******/ })()

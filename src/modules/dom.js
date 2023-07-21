@@ -53,7 +53,18 @@ const Dom = (function () {
 			workspaces.appendChild(workspaceElement);
 		});
 	};
-	return { openWorkspace, displayWorkspaces };
+
+	const displayToolbar = () => {
+		const createWorkspace = document.createElement("button");
+		createWorkspace.textContent = "Create workspace";
+		createWorkspace.classList.add("createWorkspace");
+		createWorkspace.addEventListener("click", () => {
+			console.log("Create workspace button clicked!");
+		});
+		toolbar.appendChild(createWorkspace);
+	};
+
+	return { openWorkspace, displayWorkspaces, displayToolbar };
 })();
 
 export default Dom;

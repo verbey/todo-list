@@ -12,5 +12,7 @@ const generalWorkspace = new Workspace("General", "A workspace for general todos
 const exampleTodo = new Todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
 generalWorkspace.todos.push(exampleTodo);
 Storage.workspaces.push(generalWorkspace);
+
+Dom.displayToolbar();
 Dom.displayWorkspaces();
 Dom.openWorkspace(generalWorkspace);
