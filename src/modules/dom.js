@@ -49,6 +49,7 @@ const Dom = (function () {
 			const workspaceElement = document.createElement("div");
 			workspaceElement.classList.add("workspace");
 			workspaceElement.textContent = workspace.title;
+			workspaceElement.style.background = workspace.color;
 			workspaces.appendChild(workspaceElement);
 		});
 	};
