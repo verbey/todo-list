@@ -8,8 +8,13 @@ const Dom = (function () {
 	const workspaces = document.querySelector(".workspaces");
 	const todos = document.querySelector(".todos");
 
-	const openWorkspace = () => {
-		// function logic goes here
+	const openWorkspace = (workspace) => {
+		workspace.todos.forEach((todo) => {
+			const todoElement = document.createElement("div");
+			todoElement.classList.add("todo");
+			todoElement.textContent = todo.title;
+			todos.appendChild(todoElement);
+		});
 	};
 
 	const displayWorkspaces = () => {

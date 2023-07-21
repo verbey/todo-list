@@ -5,7 +5,8 @@ class Workspace {
 		this.title = title;
 		this.description = description;
 		this.color = color;
-		this.todos = todos;
+		if (todos === undefined) this.todos = [];
+		else this.todos = todos;
 	}
 }
 
