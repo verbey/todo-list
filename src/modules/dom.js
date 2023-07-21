@@ -1,3 +1,5 @@
+"use strict";
+
 import Storage from './storage.js';
 
 const Dom = (function () {

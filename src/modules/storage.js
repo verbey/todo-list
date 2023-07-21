@@ -1,3 +1,5 @@
+"use strict";
+
 const Storage = (function () {
 	let workspaces = [];
 	return { workspaces };
