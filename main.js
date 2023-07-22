@@ -27,6 +27,8 @@ class Workspace {
 		this.color = color;
 		if (todos === undefined) this.todos = [];
 		else this.todos = todos;
+		console.log("New Workspace created:");
+		console.log(this);
 	}
 }
 
@@ -41,6 +43,7 @@ const Storage = (function () {
 
 /* harmony default export */ const storage = (Storage);
 ;// CONCATENATED MODULE: ./src/modules/dom.js
+
 
 
 
@@ -107,7 +110,74 @@ const Dom = (function () {
 		toolbar.appendChild(createWorkspace);
 	};
 
-	return { openWorkspace, displayWorkspaces, displayToolbar };
+	const openWorkspaceForm = () => {
+		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
+
+		const form = document.createElement("form");
+
+		const titleLabel = document.createElement("label");
+		titleLabel.textContent = "Title:";
+		const titleInput = document.createElement("input");
+		titleInput.type = "text";
+		titleInput.id = "title";
+		titleInput.name = "title";
+		titleInput.required = true;
+		titleInput.minLength = 3;
+		titleInput.maxLength = 50;
+
+		const descriptionLabel = document.createElement("label");
+		descriptionLabel.textContent = "Description:";
+		const descriptionTextarea = document.createElement("textarea");
+		descriptionTextarea.id = "description";
+		descriptionTextarea.name = "description";
+		descriptionTextarea.required = true;
+		descriptionTextarea.minLength = 10;
+		descriptionTextarea.maxLength = 200;
+
+		const colorLabel = document.createElement("label");
+		colorLabel.textContent = "Color:";
+		const colorContainer = document.createElement("div");
+
+		colorOptions.forEach((color) => {
+			const checkbox = document.createElement("input");
+			checkbox.type = "radio";
+			checkbox.id = color;
+			checkbox.name = "color";
+			checkbox.value = color;
+
+			const checkboxLabel = document.createElement("label");
+			checkboxLabel.htmlFor = color;
+			checkboxLabel.textContent = color;
+
+			colorContainer.appendChild(checkbox);
+			colorContainer.appendChild(checkboxLabel);
+		});
+
+		const submitButton = document.createElement("input");
+		submitButton.type = "submit";
+		submitButton.value = "Create";
+		submitButton.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			const title = document.getElementById('title').value;
+			const description = document.getElementById('description').value;
+			const color = document.querySelector('input[name="color"]:checked');
+
+			const newWorkspace = new workspace(title, description, color);
+		});
+
+		form.appendChild(titleLabel);
+		form.appendChild(titleInput);
+		form.appendChild(descriptionLabel);
+		form.appendChild(descriptionTextarea);
+		form.appendChild(colorLabel);
+		form.appendChild(colorContainer);
+		form.appendChild(submitButton);
+
+		document.body.appendChild(form);
+	};
+
+	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm };
 })();
 
 /* harmony default export */ const dom = (Dom);
@@ -130,5 +200,6 @@ storage.workspaces.push(generalWorkspace);
 dom.displayToolbar();
 dom.displayWorkspaces();
 dom.openWorkspace(generalWorkspace);
+dom.openWorkspaceForm();
 /******/ })()
 ;
