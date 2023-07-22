@@ -17,22 +17,6 @@ class Todo {
 }
 
 /* harmony default export */ const todo = (Todo);
-;// CONCATENATED MODULE: ./src/modules/workspace.js
-
-
-class Workspace {
-	constructor(title, description, color, todos) {
-		this.title = title;
-		this.description = description;
-		this.color = color;
-		if (todos === undefined) this.todos = [];
-		else this.todos = todos;
-		console.log("New Workspace created:");
-		console.log(this);
-	}
-}
-
-/* harmony default export */ const workspace = (Workspace);
 ;// CONCATENATED MODULE: ./src/modules/storage.js
 
 
@@ -42,6 +26,27 @@ const Storage = (function () {
 })();
 
 /* harmony default export */ const storage = (Storage);
+;// CONCATENATED MODULE: ./src/modules/workspace.js
+
+
+
+
+class Workspace {
+	constructor(title, description, color, todos) {
+		this.title = title;
+		this.description = description;
+		this.color = color;
+		if (todos === undefined) this.todos = [];
+		else this.todos = todos;
+
+		storage.workspaces.push(this);
+
+		console.log("New Workspace created:");
+		console.log(this);
+	}
+}
+
+/* harmony default export */ const workspace = (Workspace);
 ;// CONCATENATED MODULE: ./src/modules/dom.js
 
 
@@ -159,9 +164,9 @@ const Dom = (function () {
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
-			const title = document.getElementById('title').value;
-			const description = document.getElementById('description').value;
-			const color = document.querySelector('input[name="color"]:checked');
+			const title = document.getElementById("title").value;
+			const description = document.getElementById("description").value;
+			const color = document.querySelector("input[name='color']:checked");
 
 			const newWorkspace = new workspace(title, description, color);
 		});
