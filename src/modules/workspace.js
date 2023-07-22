@@ -7,6 +7,8 @@ class Workspace {
 		this.color = color;
 		if (todos === undefined) this.todos = [];
 		else this.todos = todos;
+		console.log("New Workspace created:");
+		console.log(this);
 	}
 }
 

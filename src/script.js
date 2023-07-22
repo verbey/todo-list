@@ -16,3 +16,4 @@ Storage.workspaces.push(generalWorkspace);
 Dom.displayToolbar();
 Dom.displayWorkspaces();
 Dom.openWorkspace(generalWorkspace);
+Dom.openWorkspaceForm();
