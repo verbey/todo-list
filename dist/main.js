@@ -40,9 +40,6 @@ class Workspace {
 		else this.todos = todos;
 
 		storage.workspaces.push(this);
-
-		console.log("New Workspace created:");
-		console.log(this);
 	}
 }
 
@@ -110,9 +107,17 @@ const Dom = (function () {
 		createWorkspace.textContent = "Create workspace";
 		createWorkspace.classList.add("createWorkspace");
 		createWorkspace.addEventListener("click", () => {
-			console.log("Create workspace button clicked!");
+			openWorkspaceForm();
 		});
 		toolbar.appendChild(createWorkspace);
+
+		const createTodo = document.createElement("button");
+		createTodo.textContent = "Create todo";
+		createTodo.classList.add("createTodo");
+		createTodo.addEventListener("click", () => {
+			openTodoForm();
+		});
+		toolbar.appendChild(createTodo);
 	};
 
 	const openWorkspaceForm = () => {
@@ -182,7 +187,108 @@ const Dom = (function () {
 		document.body.appendChild(form);
 	};
 
-	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm };
+	const openTodoForm = () => {
+		const form = document.createElement("form");
+
+		const titleLabel = document.createElement("label");
+		titleLabel.htmlFor = "title";
+		titleLabel.textContent = "Title:";
+
+		const titleInput = document.createElement("input");
+		titleInput.type = "text";
+		titleInput.id = "title";
+		titleInput.name = "title";
+		titleInput.required = true;
+
+		form.appendChild(titleLabel);
+		form.appendChild(titleInput);
+
+		const descriptionLabel = document.createElement("label");
+		descriptionLabel.htmlFor = "description";
+		descriptionLabel.textContent = "Description:";
+
+		const descriptionInput = document.createElement("input");
+		descriptionInput.type = "text";
+		descriptionInput.id = "description";
+		descriptionInput.name = "description";
+		descriptionInput.required = true;
+
+		form.appendChild(descriptionLabel);
+		form.appendChild(descriptionInput);
+
+		const dueDateLabel = document.createElement("label");
+		dueDateLabel.htmlFor = "dueDate";
+		dueDateLabel.textContent = "Due Date:";
+
+		const dueDateInput = document.createElement("input");
+		dueDateInput.type = "date";
+		dueDateInput.id = "dueDate";
+		dueDateInput.name = "dueDate";
+		dueDateInput.required = true;
+
+		form.appendChild(dueDateLabel);
+		form.appendChild(dueDateInput);
+
+		const colorLabel = document.createElement("label");
+		colorLabel.htmlFor = "color";
+		colorLabel.textContent = "Color:";
+
+		const colorInput = document.createElement("input");
+		colorInput.type = "color";
+		colorInput.id = "color";
+		colorInput.name = "color";
+
+		form.appendChild(colorLabel);
+		form.appendChild(colorInput);
+
+		const priorityLabel = document.createElement("label");
+		priorityLabel.htmlFor = "priority";
+		priorityLabel.textContent = "Priority:";
+
+		const priorityInput = document.createElement("input");
+		priorityInput.type = "number";
+		priorityInput.id = "priority";
+		priorityInput.name = "priority";
+		priorityInput.min = 1;
+		priorityInput.required = true;
+
+		form.appendChild(priorityLabel);
+		form.appendChild(priorityInput);
+
+		const addChecklistBtn = document.createElement("button");
+		addChecklistBtn.textContent = "Add Checklist Item";
+
+		addChecklistBtn.onclick = () => {
+			const newChecklistLabel = checklistLabel.cloneNode();
+			const newChecklistInput = checklistInput.cloneNode();
+
+			form.appendChild(newChecklistLabel);
+			form.appendChild(newChecklistInput);
+		};
+
+		const checklistLabel = document.createElement("label");
+		checklistLabel.htmlFor = "checklist";
+		checklistLabel.textContent = "Checklist Item:";
+
+		const checklistInput = document.createElement("input");
+		checklistInput.type = "text";
+		checklistInput.id = "checklist";
+		checklistInput.name = "checklist";
+
+		form.appendChild(addChecklistBtn);
+		form.appendChild(checklistLabel);
+		form.appendChild(checklistInput);
+
+		const submitButton = document.createElement("input");
+		submitButton.type = "submit";
+		submitButton.value = "Submit";
+
+		form.appendChild(submitButton);
+
+		document.body.appendChild(form);
+	};
+
+	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm };
 })();
 
 /* harmony default export */ const dom = (Dom);
@@ -200,7 +306,6 @@ noscript.remove();
 const generalWorkspace = new workspace("General", "A workspace for general todos", "#458588");
 const exampleTodo = new todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
 generalWorkspace.todos.push(exampleTodo);
-storage.workspaces.push(generalWorkspace);
 
 dom.displayToolbar();
 dom.displayWorkspaces();
