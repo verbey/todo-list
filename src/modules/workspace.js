@@ -11,9 +11,6 @@ class Workspace {
 		else this.todos = todos;
 
 		Storage.workspaces.push(this);
-
-		console.log("New Workspace created:");
-		console.log(this);
 	}
 }
 
