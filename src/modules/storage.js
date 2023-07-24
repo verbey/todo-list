@@ -1,8 +1,9 @@
 "use strict";
 
-const Storage = (function () {
+const Storage = (() => {
 	let workspaces = [];
-	return { workspaces };
+	let currentWorkspace;
+	return { workspaces, currentWorkspace };
 })();
 
 export default Storage;

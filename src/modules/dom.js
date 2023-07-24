@@ -43,6 +43,7 @@ const Dom = (function () {
 
 			todos.appendChild(todoCont);
 		});
+		Storage.currentWorkspace = workspace;
 	};
 
 	const displayWorkspaces = () => {
