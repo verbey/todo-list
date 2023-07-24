@@ -20,9 +20,10 @@ class Todo {
 ;// CONCATENATED MODULE: ./src/modules/storage.js
 
 
-const Storage = (function () {
+const Storage = (() => {
 	let workspaces = [];
-	return { workspaces };
+	let currentWorkspace;
+	return { workspaces, currentWorkspace };
 })();
 
 /* harmony default export */ const storage = (Storage);
@@ -45,6 +46,7 @@ class Workspace {
 
 /* harmony default export */ const workspace = (Workspace);
 ;// CONCATENATED MODULE: ./src/modules/dom.js
+
 
 
 
@@ -90,6 +92,7 @@ const Dom = (function () {
 
 			todos.appendChild(todoCont);
 		});
+		storage.currentWorkspace = workspace;
 	};
 
 	const displayWorkspaces = () => {
@@ -188,6 +191,8 @@ const Dom = (function () {
 	};
 
 	const openTodoForm = () => {
+		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
+
 		const form = document.createElement("form");
 
 		const titleLabel = document.createElement("label");
@@ -230,16 +235,25 @@ const Dom = (function () {
 		form.appendChild(dueDateInput);
 
 		const colorLabel = document.createElement("label");
-		colorLabel.htmlFor = "color";
 		colorLabel.textContent = "Color:";
+		const colorContainer = document.createElement("div");
 
-		const colorInput = document.createElement("input");
-		colorInput.type = "color";
-		colorInput.id = "color";
-		colorInput.name = "color";
+		colorOptions.forEach((color) => {
+			const checkbox = document.createElement("input");
+			checkbox.type = "radio";
+			checkbox.id = color;
+			checkbox.name = "color";
+			checkbox.value = color;
 
-		form.appendChild(colorLabel);
-		form.appendChild(colorInput);
+			const checkboxLabel = document.createElement("label");
+			checkboxLabel.htmlFor = color;
+			checkboxLabel.textContent = color;
+
+			colorContainer.appendChild(checkbox);
+			colorContainer.appendChild(checkboxLabel);
+		});
+
+		form.appendChild(colorContainer);
 
 		const priorityLabel = document.createElement("label");
 		priorityLabel.htmlFor = "priority";
@@ -282,6 +296,24 @@ const Dom = (function () {
 		const submitButton = document.createElement("input");
 		submitButton.type = "submit";
 		submitButton.value = "Submit";
+		submitButton.addEventListener("click", (event) => {
+			event.preventDefault();
+			const title = document.getElementById("title").value;
+			const description = document.getElementById("description").value;
+			const dueDate = document.getElementById("dueDate").value;
+			const color = document.querySelector("input[name='color']:checked");
+			const priority = document.getElementById("priority").value;
+			const checklistItems = Array.from(document.querySelectorAll("#checklist"));
+			checklistItems.forEach((item) => {
+				item = {
+					title: item.value,
+					status: false,
+				};
+			});
+			const newTodo = new todo(title, description, color, dueDate, priority, checklistItems);
+			storage.currentWorkspace.todos.push(newTodo);
+			openWorkspace(storage.currentWorkspace);
+		});
 
 		form.appendChild(submitButton);
 
@@ -310,6 +342,5 @@ generalWorkspace.todos.push(exampleTodo);
 dom.displayToolbar();
 dom.displayWorkspaces();
 dom.openWorkspace(generalWorkspace);
-dom.openWorkspaceForm();
 /******/ })()
 ;
