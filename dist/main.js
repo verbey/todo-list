@@ -42,6 +42,13 @@ class Workspace {
 
 		storage.workspaces.push(this);
 	}
+
+	remove() {
+		const index = storage.workspaces.indexOf(this);
+		storage.workspaces.splice(index, 1);
+		this.todos = undefined;
+		storage.currentWorkspace = undefined;
+	}
 }
 
 /* harmony default export */ const workspace = (Workspace);
@@ -59,42 +66,50 @@ const Dom = (function () {
 	const todos = document.querySelector(".todos");
 
 	const openWorkspace = (workspace) => {
-		workspace.todos.forEach((todo) => {
-			const todoCont = document.createElement("div");
-			todoCont.classList.add("todoCont");
-			todoCont.style.background = todo.color;
+		if (workspace) {
+			workspace.todos.forEach((todo) => {
+				const todoCont = document.createElement("div");
+				todoCont.classList.add("todoCont");
+				todoCont.style.background = todo.color;
 
-			const todoTitle = document.createElement("h2");
-			todoTitle.textContent = todo.title;
-			todoCont.appendChild(todoTitle);
+				const todoTitle = document.createElement("h2");
+				todoTitle.textContent = todo.title;
+				todoCont.appendChild(todoTitle);
 
-			const todoDesc = document.createElement("p");
-			todoDesc.textContent = todo.description;
-			todoCont.appendChild(todoDesc);
+				const todoDesc = document.createElement("p");
+				todoDesc.textContent = todo.description;
+				todoCont.appendChild(todoDesc);
 
-			const todoDue = document.createElement("div");
-			todoDue.textContent = `Due date: ${todo.dueDate}`;
-			todoCont.appendChild(todoDue);
+				const todoDue = document.createElement("div");
+				todoDue.textContent = `Due date: ${todo.dueDate}`;
+				todoCont.appendChild(todoDue);
 
-			const todoPriority = document.createElement("div");
-			todoPriority.textContent = `Priority: ${todo.priority}`;
-			todoCont.appendChild(todoPriority);
+				const todoPriority = document.createElement("div");
+				todoPriority.textContent = `Priority: ${todo.priority}`;
+				todoCont.appendChild(todoPriority);
 
-			if (todo.checklistItems) {
-				const todoChecklistCont = document.createElement("div");
-				todo.checklistItems.forEach((item) => {
-					const todoChecklistItem = document.createElement("div");
-					todoChecklistItem.textContent = item.title;
-					todoChecklistCont.appendChild(todoChecklistItem);
-				});
-				todoCont.appendChild(todoChecklistCont);
-			}
+				if (todo.checklistItems) {
+					const todoChecklistCont = document.createElement("div");
+					todo.checklistItems.forEach((item) => {
+						const todoChecklistItem = document.createElement("div");
+						todoChecklistItem.textContent = item.title;
+						todoChecklistCont.appendChild(todoChecklistItem);
+					});
+					todoCont.appendChild(todoChecklistCont);
+				}
 
-			todos.appendChild(todoCont);
-		});
-		storage.currentWorkspace = workspace;
+				todos.appendChild(todoCont);
+			});
+			storage.currentWorkspace = workspace;
+		}
+		else {
+			console.log("triggered");
+			const noWorkspace = document.createElement("div");
+			noWorkspace.classList.add("noWorkspace");
+			noWorkspace.textContent = "No workspace selected";
+			todos.appendChild(noWorkspace);
+		}
 	};
-
 	const displayWorkspaces = () => {
 		storage.workspaces.forEach((workspace) => {
 			const workspaceElement = document.createElement("div");
@@ -121,6 +136,17 @@ const Dom = (function () {
 			openTodoForm();
 		});
 		toolbar.appendChild(createTodo);
+
+		if (storage.currentWorkspace) {
+			const deleteWorkspace = document.createElement("button");
+			deleteWorkspace.textContent = "Delete workspace";
+			deleteWorkspace.classList.add("deleteWorkspace");
+			deleteWorkspace.addEventListener("click", () => {
+				storage.currentWorkspace.remove();
+				openWorkspace();
+			});
+			toolbar.appendChild(deleteWorkspace);
+		}
 	};
 
 	const openWorkspaceForm = () => {
@@ -339,8 +365,8 @@ const generalWorkspace = new workspace("General", "A workspace for general todos
 const exampleTodo = new todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
 generalWorkspace.todos.push(exampleTodo);
 
-dom.displayToolbar();
 dom.displayWorkspaces();
 dom.openWorkspace(generalWorkspace);
+dom.displayToolbar();
 /******/ })()
 ;

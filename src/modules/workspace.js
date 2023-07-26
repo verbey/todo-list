@@ -12,6 +12,13 @@ class Workspace {
 
 		Storage.workspaces.push(this);
 	}
+
+	remove() {
+		const index = Storage.workspaces.indexOf(this);
+		Storage.workspaces.splice(index, 1);
+		this.todos = undefined;
+		Storage.currentWorkspace = undefined;
+	}
 }
 
 export default Workspace;
