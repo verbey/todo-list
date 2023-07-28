@@ -103,7 +103,6 @@ const Dom = (function () {
 			storage.currentWorkspace = workspace;
 		}
 		else {
-			console.log("triggered");
 			const noWorkspace = document.createElement("div");
 			noWorkspace.classList.add("noWorkspace");
 			noWorkspace.textContent = "No workspace selected";
@@ -150,6 +149,7 @@ const Dom = (function () {
 	};
 
 	const openWorkspaceForm = () => {
+		removeForms();
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
 		const form = document.createElement("form");
@@ -213,10 +213,15 @@ const Dom = (function () {
 		form.appendChild(colorContainer);
 		form.appendChild(submitButton);
 
-		document.body.appendChild(form);
+		const overlay = document.createElement("div");
+		overlay.classList.add("overlay");
+		overlay.appendChild(form);
+
+		document.body.appendChild(overlay);
 	};
 
 	const openTodoForm = () => {
+		removeForms();
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
 		const form = document.createElement("form");
@@ -343,10 +348,19 @@ const Dom = (function () {
 
 		form.appendChild(submitButton);
 
-		document.body.appendChild(form);
+		const overlay = document.createElement("div");
+		overlay.classList.add("overlay");
+		overlay.appendChild(form);
+
+		document.body.appendChild(overlay);
 	};
 
-	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm };
+	const removeForms = () => {
+		const overlay = document.querySelector(".overlay");
+		if (overlay) overlay.remove();
+	};
+
+	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms };
 })();
 
 /* harmony default export */ const dom = (Dom);
