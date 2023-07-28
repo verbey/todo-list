@@ -103,6 +103,11 @@ const Dom = (function () {
 			storage.currentWorkspace = workspace;
 		}
 		else {
+			const todosArr = Array.from(todos.children);
+			todosArr.forEach((todo) => {
+				todo.remove();
+			});
+
 			const noWorkspace = document.createElement("div");
 			noWorkspace.classList.add("noWorkspace");
 			noWorkspace.textContent = "No workspace selected";
@@ -110,6 +115,11 @@ const Dom = (function () {
 		}
 	};
 	const displayWorkspaces = () => {
+		const workspacesArr = Array.from(workspaces.children);
+		workspacesArr.forEach((workspace) => {
+			workspace.remove();
+		});
+
 		storage.workspaces.forEach((workspace) => {
 			const workspaceElement = document.createElement("div");
 			workspaceElement.classList.add("workspace");
@@ -120,6 +130,10 @@ const Dom = (function () {
 	};
 
 	const displayToolbar = () => {
+		const toolbarArr = Array.from(toolbar.children);
+		toolbarArr.forEach((button) => {
+			button.remove();
+		});
 		const createWorkspace = document.createElement("button");
 		createWorkspace.textContent = "Create workspace";
 		createWorkspace.classList.add("createWorkspace");
@@ -142,7 +156,7 @@ const Dom = (function () {
 			deleteWorkspace.classList.add("deleteWorkspace");
 			deleteWorkspace.addEventListener("click", () => {
 				storage.currentWorkspace.remove();
-				openWorkspace();
+				updateDisplay();
 			});
 			toolbar.appendChild(deleteWorkspace);
 		}
@@ -203,6 +217,8 @@ const Dom = (function () {
 			const color = document.querySelector("input[name='color']:checked");
 
 			const newWorkspace = new workspace(title, description, color);
+
+			updateDisplay();
 		});
 
 		form.appendChild(titleLabel);
@@ -360,7 +376,13 @@ const Dom = (function () {
 		if (overlay) overlay.remove();
 	};
 
-	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms };
+	const updateDisplay = () => {
+		displayWorkspaces();
+		openWorkspace();
+		displayToolbar();
+	};
+
+	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
 })();
 
 /* harmony default export */ const dom = (Dom);
