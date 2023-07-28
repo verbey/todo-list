@@ -10,9 +10,14 @@ const Dom = (function () {
 	const workspaces = document.querySelector(".workspaces");
 	const todos = document.querySelector(".todos");
 
-	const openWorkspace = (workspace) => {
-		if (workspace) {
-			workspace.todos.forEach((todo) => {
+	const displayTodos = () => {
+		const todosArr = Array.from(todos.children);
+		todosArr.forEach((todo) => {
+			todo.remove();
+		});
+
+		if (Storage.currentWorkspace) {
+			Storage.currentWorkspace.todos.forEach((todo) => {
 				const todoCont = document.createElement("div");
 				todoCont.classList.add("todoCont");
 				todoCont.style.background = todo.color;
@@ -45,14 +50,8 @@ const Dom = (function () {
 
 				todos.appendChild(todoCont);
 			});
-			Storage.currentWorkspace = workspace;
 		}
 		else {
-			const todosArr = Array.from(todos.children);
-			todosArr.forEach((todo) => {
-				todo.remove();
-			});
-
 			const noWorkspace = document.createElement("div");
 			noWorkspace.classList.add("noWorkspace");
 			noWorkspace.textContent = "No workspace selected";
@@ -70,6 +69,11 @@ const Dom = (function () {
 			workspaceElement.classList.add("workspace");
 			workspaceElement.textContent = workspace.title;
 			workspaceElement.style.background = workspace.color;
+
+			workspaceElement.addEventListener("click", () => {
+				Storage.currentWorkspace = workspace;
+				updateDisplay();
+			});
 			workspaces.appendChild(workspaceElement);
 		});
 	};
@@ -108,7 +112,6 @@ const Dom = (function () {
 	};
 
 	const openWorkspaceForm = () => {
-		removeForms();
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
 		const form = document.createElement("form");
@@ -157,6 +160,8 @@ const Dom = (function () {
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
+			removeForms();
+
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
 			const color = document.querySelector("input[name='color']:checked");
@@ -179,6 +184,8 @@ const Dom = (function () {
 		overlay.appendChild(form);
 
 		document.body.appendChild(overlay);
+
+		removeForms();
 	};
 
 	const openTodoForm = () => {
@@ -290,6 +297,7 @@ const Dom = (function () {
 		submitButton.value = "Submit";
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
+
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
 			const dueDate = document.getElementById("dueDate").value;
@@ -304,7 +312,8 @@ const Dom = (function () {
 			});
 			const newTodo = new Todo(title, description, color, dueDate, priority, checklistItems);
 			Storage.currentWorkspace.todos.push(newTodo);
-			openWorkspace(Storage.currentWorkspace);
+			displayTodos();
+			removeForms();
 		});
 
 		form.appendChild(submitButton);
@@ -323,11 +332,11 @@ const Dom = (function () {
 
 	const updateDisplay = () => {
 		displayWorkspaces();
-		openWorkspace();
+		displayTodos();
 		displayToolbar();
 	};
 
-	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
+	return { displayTodos, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
 })();
 
 export default Dom;

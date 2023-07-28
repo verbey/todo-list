@@ -65,9 +65,14 @@ const Dom = (function () {
 	const workspaces = document.querySelector(".workspaces");
 	const todos = document.querySelector(".todos");
 
-	const openWorkspace = (workspace) => {
-		if (workspace) {
-			workspace.todos.forEach((todo) => {
+	const openWorkspace = () => {
+		const todosArr = Array.from(todos.children);
+		todosArr.forEach((todo) => {
+			todo.remove();
+		});
+
+		if (storage.currentWorkspace) {
+			storage.currentWorkspace.todos.forEach((todo) => {
 				const todoCont = document.createElement("div");
 				todoCont.classList.add("todoCont");
 				todoCont.style.background = todo.color;
@@ -100,14 +105,8 @@ const Dom = (function () {
 
 				todos.appendChild(todoCont);
 			});
-			storage.currentWorkspace = workspace;
 		}
 		else {
-			const todosArr = Array.from(todos.children);
-			todosArr.forEach((todo) => {
-				todo.remove();
-			});
-
 			const noWorkspace = document.createElement("div");
 			noWorkspace.classList.add("noWorkspace");
 			noWorkspace.textContent = "No workspace selected";
@@ -125,6 +124,11 @@ const Dom = (function () {
 			workspaceElement.classList.add("workspace");
 			workspaceElement.textContent = workspace.title;
 			workspaceElement.style.background = workspace.color;
+
+			workspaceElement.addEventListener("click", () => {
+				storage.currentWorkspace = workspace;
+				updateDisplay();
+			});
 			workspaces.appendChild(workspaceElement);
 		});
 	};
@@ -401,8 +405,7 @@ const generalWorkspace = new workspace("General", "A workspace for general todos
 const exampleTodo = new todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
 generalWorkspace.todos.push(exampleTodo);
 
-dom.displayWorkspaces();
-dom.openWorkspace(generalWorkspace);
-dom.displayToolbar();
+storage.currentWorkspace = generalWorkspace;
+dom.updateDisplay();
 /******/ })()
 ;
