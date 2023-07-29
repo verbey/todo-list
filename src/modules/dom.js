@@ -48,6 +48,27 @@ const Dom = (function () {
 					todoCont.appendChild(todoChecklistCont);
 				}
 
+				const todoBtns = document.createElement("div");
+
+				const deleteBtn = document.createElement("button");
+				deleteBtn.value = "delete";
+				deleteBtn.textContent = "Delete";
+				deleteBtn.addEventListener("click", (event) => {
+					const todosArr = Array.from(todos.children);
+					const index = todosArr.indexOf(event.target.parentNode.parentNode);
+					Storage.currentWorkspace.todos.splice(index, 1);
+					updateDisplay();
+				});
+
+				const editBtn = document.createElement("button");
+				editBtn.value = "edit";
+				editBtn.textContent = "Edit";
+
+				todoBtns.appendChild(deleteBtn);
+				todoBtns.appendChild(editBtn);
+
+				todoCont.appendChild(todoBtns);
+
 				todos.appendChild(todoCont);
 			});
 		}
