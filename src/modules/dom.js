@@ -63,6 +63,12 @@ const Dom = (function () {
 				const editBtn = document.createElement("button");
 				editBtn.value = "edit";
 				editBtn.textContent = "Edit";
+				editBtn.addEventListener("click", (event) => {
+					const todosArr = Array.from(todos.children);
+					const index = todosArr.indexOf(event.target.parentNode.parentNode);
+					const todo = Storage.currentWorkspace.todos[index];
+					openTodoForm(todo);
+				});
 
 				todoBtns.appendChild(deleteBtn);
 				todoBtns.appendChild(editBtn);
@@ -209,7 +215,7 @@ const Dom = (function () {
 		removeForms();
 	};
 
-	const openTodoForm = () => {
+	const openTodoForm = (todo) => {
 		removeForms();
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
@@ -313,11 +319,22 @@ const Dom = (function () {
 		form.appendChild(checklistLabel);
 		form.appendChild(checklistInput);
 
+		if (todo) {
+			titleInput.value = todo.title;
+			descriptionInput.value = todo.description;
+			dueDateInput.value = todo.dueDate;
+			priorityInput.value = todo.value;
+		}
+
 		const submitButton = document.createElement("input");
 		submitButton.type = "submit";
 		submitButton.value = "Submit";
+		submitButton.todo = todo;
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
+			// The below is a workaround to not being able to pass the todo object 
+			// into the callback function
+			const todo = event.target.todo;
 
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
@@ -325,16 +342,26 @@ const Dom = (function () {
 			const color = document.querySelector("input[name='color']:checked");
 			const priority = document.getElementById("priority").value;
 			const checklistItems = Array.from(document.querySelectorAll("#checklist"));
-			checklistItems.forEach((item) => {
-				item = {
-					title: item.value,
-					status: false,
-				};
-			});
-			const newTodo = new Todo(title, description, color, dueDate, priority, checklistItems);
-			Storage.currentWorkspace.todos.push(newTodo);
-			displayTodos();
-			removeForms();
+			if (todo) {
+				todo.title = title;
+				todo.description = description;
+				todo.dueDate = dueDate;
+				todo.color = color;
+				todo.priority = priority;
+				todo.checklistItems = checklistItems;
+				updateDisplay();
+			}
+			else {
+				checklistItems.forEach((item) => {
+					item = {
+						title: item.value,
+						status: false,
+					};
+				});
+				const newTodo = new Todo(title, description, color, dueDate, priority, checklistItems);
+				Storage.currentWorkspace.todos.push(newTodo);
+				updateDisplay();
+			}
 		});
 
 		form.appendChild(submitButton);
