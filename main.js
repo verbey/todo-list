@@ -65,7 +65,7 @@ const Dom = (function () {
 	const workspaces = document.querySelector(".workspaces");
 	const todos = document.querySelector(".todos");
 
-	const openWorkspace = () => {
+	const displayTodos = () => {
 		const todosArr = Array.from(todos.children);
 		todosArr.forEach((todo) => {
 			todo.remove();
@@ -102,6 +102,27 @@ const Dom = (function () {
 					});
 					todoCont.appendChild(todoChecklistCont);
 				}
+
+				const todoBtns = document.createElement("div");
+
+				const deleteBtn = document.createElement("button");
+				deleteBtn.value = "delete";
+				deleteBtn.textContent = "Delete";
+				deleteBtn.addEventListener("click", (event) => {
+					const todosArr = Array.from(todos.children);
+					const index = todosArr.indexOf(event.target.parentNode.parentNode);
+					storage.currentWorkspace.todos.splice(index, 1);
+					updateDisplay();
+				});
+
+				const editBtn = document.createElement("button");
+				editBtn.value = "edit";
+				editBtn.textContent = "Edit";
+
+				todoBtns.appendChild(deleteBtn);
+				todoBtns.appendChild(editBtn);
+
+				todoCont.appendChild(todoBtns);
 
 				todos.appendChild(todoCont);
 			});
@@ -167,7 +188,6 @@ const Dom = (function () {
 	};
 
 	const openWorkspaceForm = () => {
-		removeForms();
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
 		const form = document.createElement("form");
@@ -216,6 +236,8 @@ const Dom = (function () {
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
+			removeForms();
+
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
 			const color = document.querySelector("input[name='color']:checked");
@@ -238,6 +260,8 @@ const Dom = (function () {
 		overlay.appendChild(form);
 
 		document.body.appendChild(overlay);
+
+		removeForms();
 	};
 
 	const openTodoForm = () => {
@@ -349,6 +373,7 @@ const Dom = (function () {
 		submitButton.value = "Submit";
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
+
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
 			const dueDate = document.getElementById("dueDate").value;
@@ -363,7 +388,8 @@ const Dom = (function () {
 			});
 			const newTodo = new todo(title, description, color, dueDate, priority, checklistItems);
 			storage.currentWorkspace.todos.push(newTodo);
-			openWorkspace(storage.currentWorkspace);
+			displayTodos();
+			removeForms();
 		});
 
 		form.appendChild(submitButton);
@@ -382,11 +408,11 @@ const Dom = (function () {
 
 	const updateDisplay = () => {
 		displayWorkspaces();
-		openWorkspace();
+		displayTodos();
 		displayToolbar();
 	};
 
-	return { openWorkspace, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
+	return { displayTodos, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
 })();
 
 /* harmony default export */ const dom = (Dom);
