@@ -242,8 +242,6 @@ const Dom = (function () {
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
-			removeForms();
-
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
 			const color = document.querySelector("input[name='color']:checked");
@@ -266,8 +264,6 @@ const Dom = (function () {
 		overlay.appendChild(form);
 
 		document.body.appendChild(overlay);
-
-		removeForms();
 	};
 
 	const openTodoForm = (todo) => {
@@ -434,6 +430,7 @@ const Dom = (function () {
 	};
 
 	const updateDisplay = () => {
+		removeForms();
 		displayWorkspaces();
 		displayTodos();
 		displayToolbar();
