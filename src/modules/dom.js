@@ -4,7 +4,7 @@ import Storage from "./storage.js";
 import Workspace from "./workspace.js";
 import Todo from "./todo.js";
 
-const Dom = (function () {
+const Dom = (() => {
 	const content = document.querySelector("#content");
 	const toolbar = document.querySelector(".toolbar");
 	const workspaces = document.querySelector(".workspaces");
@@ -63,10 +63,7 @@ const Dom = (function () {
 				const editBtn = document.createElement("button");
 				editBtn.value = "edit";
 				editBtn.textContent = "Edit";
-				editBtn.addEventListener("click", (event) => {
-					const todosArr = Array.from(todos.children);
-					const index = todosArr.indexOf(event.target.parentNode.parentNode);
-					const todo = Storage.currentWorkspace.todos[index];
+				editBtn.addEventListener("click", () => {
 					openTodoForm(todo);
 				});
 
@@ -92,16 +89,36 @@ const Dom = (function () {
 		});
 
 		Storage.workspaces.forEach((workspace) => {
+			const workspaceCont = document.createElement("div");
+
 			const workspaceElement = document.createElement("div");
 			workspaceElement.classList.add("workspace");
 			workspaceElement.textContent = workspace.title;
 			workspaceElement.style.background = workspace.color;
-
+			workspaceCont.appendChild(workspaceElement);
 			workspaceElement.addEventListener("click", () => {
 				Storage.currentWorkspace = workspace;
 				updateDisplay();
 			});
-			workspaces.appendChild(workspaceElement);
+
+			const deleteBtn = document.createElement("button");
+			deleteBtn.value = "delete";
+			deleteBtn.textContent = "Delete";
+			workspaceCont.appendChild(deleteBtn);
+			deleteBtn.addEventListener("click", () => {
+				workspace.remove();
+				updateDisplay();
+			});
+
+			const editBtn = document.createElement("button");
+			editBtn.value = "edit";
+			editBtn.textContent = "Edit";
+			workspaceCont.appendChild(editBtn);
+			editBtn.addEventListener("click", () => {
+				openWorkspaceForm(workspace);
+			});
+
+			workspaces.appendChild(workspaceCont);
 		});
 	};
 
@@ -138,7 +155,7 @@ const Dom = (function () {
 		}
 	};
 
-	const openWorkspaceForm = () => {
+	const openWorkspaceForm = (workspace) => {
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
 		const form = document.createElement("form");
@@ -181,6 +198,16 @@ const Dom = (function () {
 			colorContainer.appendChild(checkboxLabel);
 		});
 
+		if (workspace) {
+			titleInput.value = workspace.title;
+			descriptionTextarea.value = workspace.description;
+			colorOptions.forEach(option => {
+				if (workspace.color === option) {
+					document.getElementById(option).checked = true;
+				}
+			});
+		}
+
 		const submitButton = document.createElement("input");
 		submitButton.type = "submit";
 		submitButton.value = "Create";
@@ -191,8 +218,14 @@ const Dom = (function () {
 			const description = document.getElementById("description").value;
 			const color = document.querySelector("input[name='color']:checked");
 
-			const newWorkspace = new Workspace(title, description, color);
-
+			if (workspace) {
+				workspace.title = title;
+				workspace.description = description;
+				workspace.color = color;
+			}
+			else {
+				const newWorkspace = new Workspace(title, description, color);
+			}
 			updateDisplay();
 		});
 
@@ -325,12 +358,8 @@ const Dom = (function () {
 		const submitButton = document.createElement("input");
 		submitButton.type = "submit";
 		submitButton.value = "Submit";
-		submitButton.todo = todo;
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
-			// The below is a workaround to not being able to pass the todo object 
-			// into the callback function
-			const todo = event.target.todo;
 
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
