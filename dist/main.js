@@ -224,6 +224,7 @@ const Dom = (() => {
 	};
 
 	const openWorkspaceForm = (workspace) => {
+		removeForms();
 		const colorOptions = ["red", "green", "yellow", "blue", "purple", "aqua"];
 
 		const form = document.createElement("form");
