@@ -20,10 +20,23 @@ class Todo {
 ;// CONCATENATED MODULE: ./src/modules/storage.js
 
 
+
+
 const Storage = (() => {
 	let workspaces = [];
 	let currentWorkspace;
-	return { workspaces, currentWorkspace };
+	const saveAll = () => {
+		if (workspaces) localStorage.setItem("workspaces", JSON.stringify(workspaces));
+	};
+	const loadAll = () => {
+		if (localStorage.getItem("workspaces") !== null) {
+			const parsedWorkspaces = JSON.parse(localStorage.getItem("workspaces"));
+			parsedWorkspaces.forEach((workspace) => {
+				const newWorkspace = new modules_workspace(workspace.title, workspace.description, workspace.color, workspace.todos);
+			});
+		}
+	};
+	return { workspaces, currentWorkspace, saveAll, loadAll };
 })();
 
 /* harmony default export */ const storage = (Storage);
@@ -463,6 +476,8 @@ const Dom = (() => {
 		displayWorkspaces();
 		displayTodos();
 		displayToolbar();
+
+		storage.saveAll();
 	};
 
 	return { displayTodos, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
@@ -480,11 +495,20 @@ const Dom = (() => {
 const noscript = document.querySelector(".noscript");
 noscript.remove();
 
-const generalWorkspace = new modules_workspace("General", "A workspace for general todos", "#458588");
-const exampleTodo = new modules_todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
-generalWorkspace.todos.push(exampleTodo);
+if (localStorage.getItem("notFirstRun")) {
+	storage.loadAll();
+	dom.updateDisplay();
+}
 
-storage.currentWorkspace = generalWorkspace;
-dom.updateDisplay();
+else {
+	localStorage.setItem("notFirstRun", true);
+	const generalWorkspace = new modules_workspace("General", "A workspace for general todos", "#458588");
+	const exampleTodo = new modules_todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
+	generalWorkspace.todos.push(exampleTodo);
+
+	storage.currentWorkspace = generalWorkspace;
+	dom.updateDisplay();
+}
+
 /******/ })()
 ;
