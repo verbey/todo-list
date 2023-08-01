@@ -408,6 +408,8 @@ const Dom = (() => {
 		displayWorkspaces();
 		displayTodos();
 		displayToolbar();
+
+		Storage.saveAll();
 	};
 
 	return { displayTodos, displayWorkspaces, displayToolbar, openWorkspaceForm, openTodoForm, removeForms, updateDisplay };
