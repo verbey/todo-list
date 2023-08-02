@@ -6,13 +6,16 @@ var __webpack_exports__ = {};
 
 
 class Todo {
-	constructor(title, description, dueDate, priority, color, checklistItems) {
+	constructor(title, description, dueDate, priority, color, checklistItems, completed) {
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.priority = priority;
 		this.color = color;
-		this.checklistItems = checklistItems;
+		if (checklistItems === undefined) this.checklistItems = [];
+		else this.checklistItems = checklistItems;
+		if (completed === undefined) this.completed = false;
+		else this.completed = completed;
 	}
 }
 
@@ -111,6 +114,13 @@ const Dom = (() => {
 					todo.checklistItems.forEach((item) => {
 						const todoChecklistItem = document.createElement("div");
 						todoChecklistItem.textContent = item.title;
+						if (item.completed) todoChecklistItem.classList.add("completed");
+						todoChecklistItem.addEventListener("click", () => {
+							item.completed = !item.completed;
+							if (item.completed) todoChecklistItem.classList.add("completed");
+							else todoChecklistItem.classList.remove("completed");
+							updateDisplay();
+						});
 						todoChecklistCont.appendChild(todoChecklistItem);
 					});
 					todoCont.appendChild(todoChecklistCont);
@@ -135,8 +145,17 @@ const Dom = (() => {
 					openTodoForm(todo);
 				});
 
+				const completedBtn = document.createElement("button");
+				completedBtn.value = "completed";
+				completedBtn.textContent = "Completed";
+				completedBtn.addEventListener("click", () => {
+					todo.completed = !todo.completed;
+					updateDisplay();
+				});
+
 				todoBtns.appendChild(deleteBtn);
 				todoBtns.appendChild(editBtn);
+				todoBtns.appendChild(completedBtn);
 
 				todoCont.appendChild(todoBtns);
 
@@ -373,6 +392,8 @@ const Dom = (() => {
 			checkbox.name = "color";
 			checkbox.value = color;
 
+			if (todo.color === color) checkbox.checked = true;
+
 			const checkboxLabel = document.createElement("label");
 			checkboxLabel.htmlFor = color;
 			checkboxLabel.textContent = color;
@@ -397,27 +418,15 @@ const Dom = (() => {
 		form.appendChild(priorityLabel);
 		form.appendChild(priorityInput);
 
-		const addChecklistBtn = document.createElement("button");
-		addChecklistBtn.textContent = "Add Checklist Item";
-
-		addChecklistBtn.onclick = () => {
-			const newChecklistLabel = checklistLabel.cloneNode();
-			const newChecklistInput = checklistInput.cloneNode();
-
-			form.appendChild(newChecklistLabel);
-			form.appendChild(newChecklistInput);
-		};
-
 		const checklistLabel = document.createElement("label");
 		checklistLabel.htmlFor = "checklist";
-		checklistLabel.textContent = "Checklist Item:";
+		checklistLabel.textContent = "Checklist items (each separated by a new line):";
 
-		const checklistInput = document.createElement("input");
-		checklistInput.type = "text";
+		const checklistInput = document.createElement("textarea");
 		checklistInput.id = "checklist";
 		checklistInput.name = "checklist";
+		checklistInput.placeholder = "Checklist item 1\nChecklist item 2";
 
-		form.appendChild(addChecklistBtn);
 		form.appendChild(checklistLabel);
 		form.appendChild(checklistInput);
 
@@ -425,7 +434,13 @@ const Dom = (() => {
 			titleInput.value = todo.title;
 			descriptionInput.value = todo.description;
 			dueDateInput.value = todo.dueDate;
-			priorityInput.value = todo.value;
+			priorityInput.value = todo.priority;
+			// color inputs is set on line 308
+			if (todo.checklistItems) {
+				todo.checklistItems.forEach((item) => {
+					checklistInput.value += `${item.title}\n`;
+				});
+			}
 		}
 
 		const submitButton = document.createElement("input");
@@ -437,26 +452,28 @@ const Dom = (() => {
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
 			const dueDate = document.getElementById("dueDate").value;
-			const color = document.querySelector("input[name='color']:checked");
+			const color = document.querySelector("input[name='color']:checked").value;
 			const priority = document.getElementById("priority").value;
-			const checklistItems = Array.from(document.querySelectorAll("#checklist"));
+			const checklistItems = document.getElementById("checklist").value;
+			const checklistItemsArr = [];
+			checklistItems.split("\n").forEach((checklistItem) => {
+				checklistItem = {
+					title: checklistItem,
+					completed: false,
+				};
+				checklistItemsArr.push(checklistItem);
+			});
 			if (todo) {
 				todo.title = title;
 				todo.description = description;
 				todo.dueDate = dueDate;
 				todo.color = color;
 				todo.priority = priority;
-				todo.checklistItems = checklistItems;
+				todo.checklistItems = checklistItemsArr;
 				updateDisplay();
 			}
 			else {
-				checklistItems.forEach((item) => {
-					item = {
-						title: item.value,
-						status: false,
-					};
-				});
-				const newTodo = new modules_todo(title, description, color, dueDate, priority, checklistItems);
+				const newTodo = new modules_todo(title, description, color, dueDate, priority, checklistItemsArr);
 				storage.currentWorkspace.todos.push(newTodo);
 				updateDisplay();
 			}
