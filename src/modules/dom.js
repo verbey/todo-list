@@ -118,6 +118,10 @@ const Dom = (() => {
 				openWorkspaceForm(workspace);
 			});
 
+			const description = document.createElement("p");
+			description.textContent = workspace.description;
+			workspaceCont.appendChild(description);
+
 			workspaces.appendChild(workspaceCont);
 		});
 	};
