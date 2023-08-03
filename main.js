@@ -148,8 +148,9 @@ const Dom = (() => {
 				const completedBtn = document.createElement("button");
 				completedBtn.value = "completed";
 				completedBtn.textContent = "Completed";
-				completedBtn.addEventListener("click", () => {
+				completedBtn.addEventListener("click", (event) => {
 					todo.completed = !todo.completed;
+					event.target.parentNode.parentNode.classList.toggle("completed");
 					updateDisplay();
 				});
 
@@ -261,6 +262,7 @@ const Dom = (() => {
 		titleInput.required = true;
 		titleInput.minLength = 3;
 		titleInput.maxLength = 50;
+		titleInput.pattern = "[a-zA-Z0-9 ]+";
 
 		const descriptionLabel = document.createElement("label");
 		descriptionLabel.textContent = "Description:";
@@ -270,6 +272,7 @@ const Dom = (() => {
 		descriptionTextarea.required = true;
 		descriptionTextarea.minLength = 10;
 		descriptionTextarea.maxLength = 200;
+		descriptionTextarea.pattern = "[a-zA-Z0-9 ]+";
 
 		const colorLabel = document.createElement("label");
 		colorLabel.textContent = "Color:";
@@ -281,6 +284,7 @@ const Dom = (() => {
 			checkbox.id = color;
 			checkbox.name = "color";
 			checkbox.value = color;
+			checkbox.required = true;
 
 			const checkboxLabel = document.createElement("label");
 			checkboxLabel.htmlFor = color;
@@ -351,6 +355,9 @@ const Dom = (() => {
 		titleInput.id = "title";
 		titleInput.name = "title";
 		titleInput.required = true;
+		titleInput.minLength = 3;
+		titleInput.maxLength = 50;
+		titleInput.pattern = "[a-zA-Z0-9]+";
 
 		form.appendChild(titleLabel);
 		form.appendChild(titleInput);
@@ -364,6 +371,9 @@ const Dom = (() => {
 		descriptionInput.id = "description";
 		descriptionInput.name = "description";
 		descriptionInput.required = true;
+		descriptionInput.minLength = 3;
+		descriptionInput.maxLength = 100;
+		descriptionInput.pattern = "[a-zA-Z0-9]+";
 
 		form.appendChild(descriptionLabel);
 		form.appendChild(descriptionInput);
@@ -391,6 +401,7 @@ const Dom = (() => {
 			checkbox.id = color;
 			checkbox.name = "color";
 			checkbox.value = color;
+			checkbox.required = true;
 
 			if (todo.color === color) checkbox.checked = true;
 
@@ -426,6 +437,7 @@ const Dom = (() => {
 		checklistInput.id = "checklist";
 		checklistInput.name = "checklist";
 		checklistInput.placeholder = "Checklist item 1\nChecklist item 2";
+		checklistInput.pattern = "[a-zA-Z0-9]+";
 
 		form.appendChild(checklistLabel);
 		form.appendChild(checklistInput);
