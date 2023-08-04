@@ -26,9 +26,11 @@ const Dom = (() => {
 				todoTitle.textContent = todo.title;
 				todoCont.appendChild(todoTitle);
 
-				const todoDesc = document.createElement("p");
-				todoDesc.textContent = todo.description;
-				todoCont.appendChild(todoDesc);
+				if (todo.description) {
+					const todoDesc = document.createElement("p");
+					todoDesc.textContent = todo.description;
+					todoCont.appendChild(todoDesc);
+				}
 
 				const todoDue = document.createElement("div");
 				todoDue.textContent = `Due date: ${todo.dueDate}`;
@@ -118,6 +120,12 @@ const Dom = (() => {
 				updateDisplay();
 			});
 
+			if (workspace.description) {
+				const description = document.createElement("p");
+				description.textContent = workspace.description;
+				workspaceCont.appendChild(description);
+			}
+
 			const deleteBtn = document.createElement("button");
 			deleteBtn.value = "delete";
 			deleteBtn.textContent = "Delete";
@@ -134,10 +142,6 @@ const Dom = (() => {
 			editBtn.addEventListener("click", () => {
 				openWorkspaceForm(workspace);
 			});
-
-			const description = document.createElement("p");
-			description.textContent = workspace.description;
-			workspaceCont.appendChild(description);
 
 			workspaces.appendChild(workspaceCont);
 		});
@@ -198,8 +202,6 @@ const Dom = (() => {
 		const descriptionTextarea = document.createElement("textarea");
 		descriptionTextarea.id = "description";
 		descriptionTextarea.name = "description";
-		descriptionTextarea.required = true;
-		descriptionTextarea.minLength = 10;
 		descriptionTextarea.maxLength = 200;
 		descriptionTextarea.pattern = "[a-zA-Z0-9 ]+";
 
@@ -299,8 +301,6 @@ const Dom = (() => {
 		descriptionInput.type = "text";
 		descriptionInput.id = "description";
 		descriptionInput.name = "description";
-		descriptionInput.required = true;
-		descriptionInput.minLength = 3;
 		descriptionInput.maxLength = 100;
 		descriptionInput.pattern = "[a-zA-Z0-9]+";
 
