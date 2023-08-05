@@ -36,6 +36,15 @@ const Dom = (() => {
 				todoDue.textContent = `Due date: ${todo.dueDate}`;
 				todoCont.appendChild(todoDue);
 
+				const dueDateObj = new Date(todo.dueDate);
+				const todayObj = new Date();
+				if (dueDateObj < todayObj) {
+					todoDue.classList.add('expired');
+				}
+				else if (dueDateObj.toDateString() === todayObj.toDateString()) {
+					todoDue.classList.add('soon');
+				}
+
 				const todoPriority = document.createElement("div");
 				todoPriority.textContent = `Priority: ${todo.priority}`;
 				todoCont.appendChild(todoPriority);
