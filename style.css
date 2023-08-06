@@ -92,3 +92,23 @@ button:hover {
 button:active {
 	filter: brightness(75%);
 }
+
+.red {
+	background-color: var(--red);
+}
+
+.yellow {
+	background-color: var(--yellow);
+}
+
+.blue {
+	background-color: var(--blue);
+}
+
+.purple {
+	background-color: var(--purple);
+}
+
+.aqua {
+	background-color: var(--aqua);
+}

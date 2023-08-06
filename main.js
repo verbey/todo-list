@@ -91,7 +91,7 @@ const Dom = (() => {
 			storage.currentWorkspace.todos.forEach((todo) => {
 				const todoCont = document.createElement("div");
 				todoCont.classList.add("todoCont");
-				todoCont.style.background = todo.color;
+				todoCont.classList.add(todo.color);
 
 				const todoTitle = document.createElement("h2");
 				todoTitle.textContent = todo.title;
@@ -318,6 +318,8 @@ const Dom = (() => {
 		const submitButton = document.createElement("button");
 		submitButton.type = "submit";
 		submitButton.value = "Create";
+		submitButton.textContent = "Submit";
+
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
@@ -467,6 +469,7 @@ const Dom = (() => {
 		const submitButton = document.createElement("button");
 		submitButton.type = "submit";
 		submitButton.value = "Submit";
+		submitButton.textContent = "Submit";
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
