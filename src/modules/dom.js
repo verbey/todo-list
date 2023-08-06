@@ -20,7 +20,7 @@ const Dom = (() => {
 			Storage.currentWorkspace.todos.forEach((todo) => {
 				const todoCont = document.createElement("div");
 				todoCont.classList.add("todoCont");
-				todoCont.style.background = todo.color;
+				todoCont.classList.add(todo.color);
 
 				const todoTitle = document.createElement("h2");
 				todoTitle.textContent = todo.title;
