@@ -56,15 +56,39 @@ img {
 	--fg2: #d5c4a1;
 	--fg3: #bdae93;
 	--fg4: #a89984;
+}
 
-	html {
-		min-height: 100%;
-	}
+html {
+	min-height: 100%;
+	background-color: var(--bg);
+	color: var(--fg0);
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+}
 
-	#content {
-		height: 100vh;
-		display: grid;
-		grid-template-columns: 10vw 1fr;
-		grid-template-rows: 3rem 1fr;
-		background-color: ;
-	}
+#content {
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 10vw 1fr;
+	grid-template-rows: 3rem 1fr;
+}
+
+button {
+	background-color: var(--orange);
+	color: var(--fg0);
+	border: none;
+	border-radius: 15px;
+	padding: 5px 15px;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+button:hover {
+	filter: brightness(90%);
+}
+
+button:active {
+	filter: brightness(75%);
+}
