@@ -34,13 +34,37 @@ img {
 	height: auto;
 }
 
-html {
-	min-height: 100%;
-}
+:root {
+	--bg: #282828;
+	--bg0_h: #1d2021;
+	--bg0: #282828;
+	--bg1: #3c3836;
+	--bg2: #504945;
+	--bg3: #665c54;
+	--bg4: #7c6f64;
+	--red: #cc241d;
+	--green: #98971a;
+	--yellow: #d79921;
+	--blue: #458588;
+	--purple: #b16286;
+	--aqua: #689d6a;
+	--gray: #a89984;
+	--orange: #d65d0e;
+	--fg: #ebdbb2;
+	--fg0: #fbf1c7;
+	--fg1: #ebdbb2;
+	--fg2: #d5c4a1;
+	--fg3: #bdae93;
+	--fg4: #a89984;
 
-#content {
-	height: 100vh;
-	display: grid;
-	grid-template-columns: 10vw 1fr;
-	grid-template-rows: 3rem 1fr;
-}
+	html {
+		min-height: 100%;
+	}
+
+	#content {
+		height: 100vh;
+		display: grid;
+		grid-template-columns: 10vw 1fr;
+		grid-template-rows: 3rem 1fr;
+		background-color: ;
+	}
