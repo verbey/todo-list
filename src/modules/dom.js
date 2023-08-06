@@ -244,9 +244,11 @@ const Dom = (() => {
 			});
 		}
 
-		const submitButton = document.createElement("input");
+		const submitButton = document.createElement("button");
 		submitButton.type = "submit";
 		submitButton.value = "Create";
+		submitButton.textContent = "Submit";
+
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
@@ -341,7 +343,7 @@ const Dom = (() => {
 			checkbox.value = color;
 			checkbox.required = true;
 
-			if (todo.color === color) checkbox.checked = true;
+			if (todo && todo.color === color) checkbox.checked = true;
 
 			const checkboxLabel = document.createElement("label");
 			checkboxLabel.htmlFor = color;
@@ -393,9 +395,10 @@ const Dom = (() => {
 			}
 		}
 
-		const submitButton = document.createElement("input");
+		const submitButton = document.createElement("button");
 		submitButton.type = "submit";
 		submitButton.value = "Submit";
+		submitButton.textContent = "Submit";
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 
