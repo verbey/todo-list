@@ -141,7 +141,10 @@ const Dom = (() => {
 
 				const deleteBtn = document.createElement("button");
 				deleteBtn.value = "delete";
-				deleteBtn.textContent = "Delete";
+				const deleteIcon = document.createElement("img");
+				deleteIcon.src = "icons/delete.svg";
+				deleteIcon.alt = "Delete";
+				deleteBtn.appendChild(deleteIcon);
 				deleteBtn.addEventListener("click", (event) => {
 					const todosArr = Array.from(todos.children);
 					const index = todosArr.indexOf(event.target.parentNode.parentNode);
@@ -151,7 +154,10 @@ const Dom = (() => {
 
 				const editBtn = document.createElement("button");
 				editBtn.value = "edit";
-				editBtn.textContent = "Edit";
+				const editIcon = document.createElement("img");
+				editIcon.src = "icons/edit.svg";
+				editIcon.alt = "Edit";
+				editBtn.appendChild(editIcon);
 				editBtn.addEventListener("click", () => {
 					openTodoForm(todo);
 				});
@@ -208,7 +214,10 @@ const Dom = (() => {
 
 			const deleteBtn = document.createElement("button");
 			deleteBtn.value = "delete";
-			deleteBtn.textContent = "Delete";
+			const deleteIcon = document.createElement("img");
+			deleteIcon.src = "icons/delete.svg";
+			deleteIcon.alt = "Delete";
+			deleteBtn.appendChild(deleteIcon);
 			workspaceCont.appendChild(deleteBtn);
 			deleteBtn.addEventListener("click", () => {
 				workspace.remove();
@@ -217,7 +226,10 @@ const Dom = (() => {
 
 			const editBtn = document.createElement("button");
 			editBtn.value = "edit";
-			editBtn.textContent = "Edit";
+			const editIcon = document.createElement("img");
+			editIcon.src = "icons/edit.svg";
+			editIcon.alt = "Edit";
+			editBtn.appendChild(editIcon);
 			workspaceCont.appendChild(editBtn);
 			editBtn.addEventListener("click", () => {
 				openWorkspaceForm(workspace);
