@@ -124,11 +124,11 @@ const Dom = (() => {
 
 		Storage.workspaces.forEach((workspace) => {
 			const workspaceCont = document.createElement("div");
+			workspaceCont.classList.add(workspace.color);
 
 			const workspaceElement = document.createElement("div");
 			workspaceElement.classList.add("workspace");
 			workspaceElement.textContent = workspace.title;
-			workspaceElement.style.background = workspace.color;
 			workspaceCont.appendChild(workspaceElement);
 			workspaceElement.addEventListener("click", () => {
 				Storage.currentWorkspace = workspace;
@@ -249,9 +249,9 @@ const Dom = (() => {
 		if (workspace) {
 			titleInput.value = workspace.title;
 			descriptionTextarea.value = workspace.description;
-			colorOptions.forEach(option => {
-				if (workspace.color === option) {
-					document.getElementById(option).checked = true;
+			colorOptions.forEach((color) => {
+				if (workspace.color === color) {
+					document.getElementById(color).checked = true;
 				}
 			});
 		}
@@ -266,7 +266,7 @@ const Dom = (() => {
 
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
-			const color = document.querySelector("input[name='color']:checked");
+			const color = document.querySelector("input[name='color']:checked").value;
 
 			if (workspace) {
 				workspace.title = title;
