@@ -175,3 +175,10 @@ button {
 	top: 5rem;
 	z-index: 1;
 }
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 5px;
+}
