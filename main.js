@@ -195,11 +195,11 @@ const Dom = (() => {
 
 		storage.workspaces.forEach((workspace) => {
 			const workspaceCont = document.createElement("div");
+			workspaceCont.classList.add(workspace.color);
 
 			const workspaceElement = document.createElement("div");
 			workspaceElement.classList.add("workspace");
 			workspaceElement.textContent = workspace.title;
-			workspaceElement.style.background = workspace.color;
 			workspaceCont.appendChild(workspaceElement);
 			workspaceElement.addEventListener("click", () => {
 				storage.currentWorkspace = workspace;
@@ -320,9 +320,9 @@ const Dom = (() => {
 		if (workspace) {
 			titleInput.value = workspace.title;
 			descriptionTextarea.value = workspace.description;
-			colorOptions.forEach(option => {
-				if (workspace.color === option) {
-					document.getElementById(option).checked = true;
+			colorOptions.forEach((color) => {
+				if (workspace.color === color) {
+					document.getElementById(color).checked = true;
 				}
 			});
 		}
@@ -337,7 +337,7 @@ const Dom = (() => {
 
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
-			const color = document.querySelector("input[name='color']:checked");
+			const color = document.querySelector("input[name='color']:checked").value;
 
 			if (workspace) {
 				workspace.title = title;
@@ -560,8 +560,8 @@ if (localStorage.getItem("notFirstRun")) {
 
 else {
 	localStorage.setItem("notFirstRun", true);
-	const generalWorkspace = new modules_workspace("General", "A workspace for general todos", "#458588");
-	const exampleTodo = new modules_todo("Example", "This is an example todo", "2023-10-25", 1, "#98971a");
+	const generalWorkspace = new modules_workspace("General", "A workspace for general todos", "aqua");
+	const exampleTodo = new modules_todo("Example", "This is an example todo", "2023-10-25", 1, "yellow");
 	generalWorkspace.todos.push(exampleTodo);
 
 	storage.currentWorkspace = generalWorkspace;

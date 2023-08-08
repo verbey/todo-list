@@ -69,8 +69,26 @@ html {
 #content {
 	height: 100vh;
 	display: grid;
-	grid-template-columns: 10vw 1fr;
+	grid-template-columns: 12vw 1fr;
 	grid-template-rows: 3rem 1fr;
+}
+
+.workspaces {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.workspaces>div {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	height: 2rem;
+}
+
+.workspace {
+	width: 6vw;
+	text-overflow: hidden;
 }
 
 button {
@@ -80,28 +98,32 @@ button {
 	font-size: 1rem;
 	font-family: Arial, Helvetica, sans-serif;
 	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 button:hover,
-.workspace:hover {
+.workspaces>div:hover {
 	filter: brightness(90%);
 }
 
 button:active,
-.workspace:active {
+.workspaces>div:active {
 	filter: brightness(75%);
 }
 
 img {
 	filter: invert();
-	height: 0.8rem;
+	height: 1rem;
 	width: auto;
+	justify-content: center;
+	align-self: center;
 }
 
 .red {
 	background-color: var(--red);
+}
+
+.green {
+	background-color: var(--green);
 }
 
 .yellow {
@@ -120,10 +142,10 @@ img {
 	background-color: var(--aqua);
 }
 
-.workspace,
+.workspaces>div,
 button {
 	border-radius: 15px;
-	padding: 5px 15px;
+	padding: 5px 10px;
 	font-weight: 700;
 	cursor: pointer;
 }
@@ -133,11 +155,9 @@ button {
 }
 
 .workspaces:hover button {
-	display: inline-block;
+	display: flex;
 	position: relative;
 	z-index: 1;
-	bottom: 1.8rem;
-	left: 4rem;
 }
 
 .workspace+p {
