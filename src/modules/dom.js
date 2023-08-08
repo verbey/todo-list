@@ -427,7 +427,7 @@ const Dom = (() => {
 				updateDisplay();
 			}
 			else {
-				const newTodo = new Todo(title, description, color, dueDate, priority, checklistItemsArr);
+				const newTodo = new Todo(title, description, dueDate, priority, color, checklistItemsArr);
 				Storage.currentWorkspace.todos.push(newTodo);
 				updateDisplay();
 			}

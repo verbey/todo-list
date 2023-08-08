@@ -498,7 +498,7 @@ const Dom = (() => {
 				updateDisplay();
 			}
 			else {
-				const newTodo = new modules_todo(title, description, color, dueDate, priority, checklistItemsArr);
+				const newTodo = new modules_todo(title, description, dueDate, priority, color, checklistItemsArr);
 				storage.currentWorkspace.todos.push(newTodo);
 				updateDisplay();
 			}
