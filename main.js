@@ -259,17 +259,6 @@ const Dom = (() => {
 			openTodoForm();
 		});
 		toolbar.appendChild(createTodo);
-
-		if (storage.currentWorkspace) {
-			const deleteWorkspace = document.createElement("button");
-			deleteWorkspace.textContent = "Delete workspace";
-			deleteWorkspace.classList.add("deleteWorkspace");
-			deleteWorkspace.addEventListener("click", () => {
-				storage.currentWorkspace.remove();
-				updateDisplay();
-			});
-			toolbar.appendChild(deleteWorkspace);
-		}
 	};
 
 	const openWorkspaceForm = (workspace) => {
