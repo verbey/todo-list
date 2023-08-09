@@ -92,6 +92,7 @@ const Dom = (() => {
 				const todoCont = document.createElement("div");
 				todoCont.classList.add("todoCont");
 				todoCont.classList.add(todo.color);
+				if (todo.completed) todoCont.classList.add("completed");
 
 				const todoTitle = document.createElement("h2");
 				todoTitle.textContent = todo.title;
@@ -165,9 +166,8 @@ const Dom = (() => {
 				const completedBtn = document.createElement("button");
 				completedBtn.value = "completed";
 				completedBtn.textContent = "Completed";
-				completedBtn.addEventListener("click", (event) => {
+				completedBtn.addEventListener("click", () => {
 					todo.completed = !todo.completed;
-					event.target.parentNode.parentNode.classList.toggle("completed");
 					updateDisplay();
 				});
 
