@@ -211,6 +211,7 @@ button {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	gap: 5px;
 }
 
 .todoCont>* {
@@ -286,4 +287,17 @@ label {
 .completed {
 	opacity: 0.6;
 	text-decoration: line-through;
+}
+
+.expired,
+.soon {
+	border: 3px dashed var(--fg);
+}
+
+.expired {
+	opacity: 0.75;
+}
+
+.soon {
+	font-size: 1.2rem;
 }

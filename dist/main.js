@@ -110,11 +110,11 @@ const Dom = (() => {
 
 				const dueDateObj = new Date(todo.dueDate);
 				const todayObj = new Date();
-				if (dueDateObj < todayObj) {
-					todoDue.classList.add('expired');
+				if (dueDateObj.getDate() === todayObj.getDate()) {
+					todoDue.classList.add("soon");
 				}
-				else if (dueDateObj.toDateString() === todayObj.toDateString()) {
-					todoDue.classList.add('soon');
+				else if (dueDateObj < todayObj) {
+					todoDue.classList.add("expired");
 				}
 
 				const todoPriority = document.createElement("div");
