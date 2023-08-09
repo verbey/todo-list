@@ -167,8 +167,12 @@ button {
 
 .workspaces:hover button {
 	display: flex;
+}
+
+.workspace+button,
+.workspace img {
 	position: relative;
-	z-index: 2;
+	z-index: 1;
 }
 
 .workspace+p {
@@ -183,8 +187,8 @@ button {
 	font-size: 0.8rem;
 	padding: 5px;
 	position: absolute;
-	top: 2rem;
-	z-index: 10;
+	left: 12vw;
+	z-index: 2;
 }
 
 .toolbar {
