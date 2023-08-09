@@ -279,6 +279,9 @@ const Dom = (() => {
 		const overlay = document.createElement("div");
 		overlay.classList.add("overlay");
 		overlay.appendChild(form);
+		overlay.addEventListener("click", (event) => {
+			if (event.target === event.currentTarget) event.target.remove();
+		});
 
 		document.body.appendChild(overlay);
 	};
@@ -438,6 +441,9 @@ const Dom = (() => {
 		const overlay = document.createElement("div");
 		overlay.classList.add("overlay");
 		overlay.appendChild(form);
+		overlay.addEventListener("click", (event) => {
+			if (event.target === event.currentTarget) event.target.remove();
+		});
 
 		document.body.appendChild(overlay);
 	};
