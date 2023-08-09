@@ -181,13 +181,15 @@ const Dom = (() => {
 		});
 		toolbar.appendChild(createWorkspace);
 
-		const createTodo = document.createElement("button");
-		createTodo.textContent = "Create todo";
-		createTodo.classList.add("createTodo");
-		createTodo.addEventListener("click", () => {
-			openTodoForm();
-		});
-		toolbar.appendChild(createTodo);
+		if (Storage.currentWorkspace) {
+			const createTodo = document.createElement("button");
+			createTodo.textContent = "Create todo";
+			createTodo.classList.add("createTodo");
+			createTodo.addEventListener("click", () => {
+				openTodoForm();
+			});
+			toolbar.appendChild(createTodo);
+		}
 	};
 
 	const openWorkspaceForm = (workspace) => {
