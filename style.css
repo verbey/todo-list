@@ -111,6 +111,7 @@ button {
 	font-family: Arial, Helvetica, sans-serif;
 	display: flex;
 	min-width: 1rem;
+	z-index: 0;
 }
 
 button:hover,
@@ -129,6 +130,7 @@ img {
 	width: auto;
 	justify-content: center;
 	align-self: center;
+	z-index: 0;
 }
 
 .red {
@@ -171,12 +173,6 @@ button {
 	display: flex;
 }
 
-.workspace+button,
-.workspace img {
-	position: relative;
-	z-index: 1;
-}
-
 .workspace+p {
 	display: none;
 }
@@ -189,8 +185,8 @@ button {
 	font-size: 0.8rem;
 	padding: 5px;
 	position: absolute;
-	left: 12vw;
 	z-index: 2;
+	left: 12vw;
 }
 
 .toolbar {
@@ -277,4 +273,12 @@ input {
 
 label {
 	font-weight: 700;
+}
+
+.todoCont button {
+	opacity: 0;
+}
+
+.todoCont:hover button {
+	opacity: 1;
 }
