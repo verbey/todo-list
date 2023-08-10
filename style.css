@@ -331,6 +331,6 @@ label {
 	.toolbar,
 	.todos,
 	.workspaces {
-		overflox: scroll;
+		overflow: scroll;
 	}
 }
