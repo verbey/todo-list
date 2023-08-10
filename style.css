@@ -301,3 +301,36 @@ label {
 .soon {
 	font-size: 1.2rem;
 }
+
+@media only screen and (max-width: 600px) {
+	#content {
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(3, 3rem) 1fr;
+	}
+
+	.workspaces {
+		flex-direction: row;
+	}
+
+	.workspace {
+		max-width: 100px;
+	}
+
+	.todoCont {
+		width: 100%;
+	}
+
+	.todoCont button {
+		opacity: 1;
+	}
+
+	form {
+		width: 90%;
+	}
+
+	.toolbar,
+	.todos,
+	.workspaces {
+		overflox: scroll;
+	}
+}
