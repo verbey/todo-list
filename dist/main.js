@@ -322,7 +322,7 @@ const Dom = (() => {
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 			const form = document.querySelector("form");
-			form.reportValidity();
+			if (!form.reportValidity()) return;
 
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
@@ -477,7 +477,7 @@ const Dom = (() => {
 		submitButton.addEventListener("click", (event) => {
 			event.preventDefault();
 			const form = document.querySelector("form");
-			form.reportValidity();
+			if (!form.reportValidity()) return;
 
 			const title = document.getElementById("title").value;
 			const description = document.getElementById("description").value;
