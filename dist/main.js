@@ -299,6 +299,7 @@ const Dom = (() => {
 			checkbox.name = "color";
 			checkbox.value = color;
 			checkbox.required = true;
+			if (workspace && workspace.color === color) checkbox.checked = true;
 
 			const checkboxLabel = document.createElement("label");
 			checkboxLabel.htmlFor = color;
@@ -311,11 +312,6 @@ const Dom = (() => {
 		if (workspace) {
 			titleInput.value = workspace.title;
 			descriptionTextarea.value = workspace.description;
-			colorOptions.forEach((color) => {
-				if (workspace.color === color) {
-					document.getElementById(color).checked = true;
-				}
-			});
 		}
 
 		const submitButton = document.createElement("button");
