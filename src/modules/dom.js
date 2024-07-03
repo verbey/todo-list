@@ -5,7 +5,6 @@ import Workspace from "./workspace.js";
 import Todo from "./todo.js";
 
 const Dom = (() => {
-	const content = document.querySelector("#content");
 	const toolbar = document.querySelector(".toolbar");
 	const workspaces = document.querySelector(".workspaces");
 	const todos = document.querySelector(".todos");
