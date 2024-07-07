@@ -18,9 +18,8 @@ You can see the live version [here](https://verbiturum.codeberg.page/todo-list/)
 1. HTML 
 2. CSS 
 3. JavaScript 
-4. WeatherAPI 
-5. babel
-6. webpack
+4. babel
+5. webpack
 
 ## Setup instructions
 1. Open terminal in the directory you want to clone this into.
