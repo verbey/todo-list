@@ -373,7 +373,7 @@ const Dom = (() => {
 		titleInput.required = true;
 		titleInput.minLength = 3;
 		titleInput.maxLength = 50;
-		titleInput.pattern = "[a-zA-Z0-9]+";
+		titleInput.pattern = "[a-zA-Z0-9 ]+";
 
 		form.appendChild(titleLabel);
 		form.appendChild(titleInput);
@@ -387,7 +387,7 @@ const Dom = (() => {
 		descriptionInput.id = "description";
 		descriptionInput.name = "description";
 		descriptionInput.maxLength = 100;
-		descriptionInput.pattern = "[a-zA-Z0-9]+";
+		descriptionInput.pattern = "[a-zA-Z0-9 ]+";
 
 		form.appendChild(descriptionLabel);
 		form.appendChild(descriptionInput);
@@ -451,7 +451,7 @@ const Dom = (() => {
 		checklistInput.id = "checklist";
 		checklistInput.name = "checklist";
 		checklistInput.placeholder = "Checklist item 1\nChecklist item 2";
-		checklistInput.pattern = "[a-zA-Z0-9]+";
+		checklistInput.pattern = "[a-zA-Z0-9 ]+";
 
 		form.appendChild(checklistLabel);
 		form.appendChild(checklistInput);
