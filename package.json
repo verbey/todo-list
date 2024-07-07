@@ -4,6 +4,7 @@
   "description": "TODO application made as part of the Odin Project course",
   "main": "dist/index.html",
   "scripts": {
+    "build": "webpack",  
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
